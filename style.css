@@ -90,3 +90,18 @@ header > h1 {
     font-weight: bold;
     font-size: 20px;
 }
+
+#connectBtn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50; /* Зеленый фон */
+    color: white; /* Белый текст */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#result {
+    color: white;
+}

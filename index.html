@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rps game</title>
     <link rel="stylesheet" href="style.css">
+
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.8.0/dist/ethers.umd.min.js" type="application/javascript"></script> 
 </head>
 <body>
     <header>
@@ -25,7 +28,7 @@
     </div>
 
 
- <div class="choices"><!--// the class will contain ourIDs -->
+ <div class="choices" id="result"><!--// the class will contain ourIDs -->
         <div class="choice" id="r">
             <img src="images/rock.png" alt="Rock">
         </div>
@@ -44,8 +47,10 @@
     </div>
     
  <p id= "action-msg">Make your move.</p> <!--//здесь making your choice here -->
-    <script src="app.js" charset="utf-8"></script>
+   
 
+    <button id="connectBtn">Connect Wallet</button>
+ <script src="app.js" charset="utf-8"></script>
 
 </body>
 </html>
