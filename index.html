@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rps game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Rock Paper Scissors</h1>
+    </header>
+
+
+ <div class= "score-board"> <!--// thisis the board that will display scores-->
+ <div id= "user-label" class="badge">user</div><!--//here we specifythe id for the user-->
+ <div id= "computer-label" class="badge">computer</div><!--// here we write for the computer-->
+        <span id="user-score">0</span>:<span id= "computer-score">0</span><!--// this is where our rock paper scissors counter will go-->
+    </div>
+
+
+ <div class= "result">   <!--// createda class where the result can be viewed-->
+        <p>Paper covers rock. You win!</p>
+    </div>
+
+
+ <div class="choices"><!--// the class will contain ourIDs -->
+        <div class="choice" id="r">
+            <img src="images/rock.png" alt="Rock">
+        </div>
+
+
+        <div class="choice" id="p">
+            <img src="images/paper.png" alt="Paper">
+        </div>
+
+
+        <div class="choice" id="s">
+            <img src="images/scissors.png" alt="Scissors">
+        </div>
+
+
+    </div>
+    
+ <p id= "action-msg">Make your move.</p> <!--//здесь making your choice here -->
+    <script src="app.js" charset="utf-8"></script>
+
+
+</body>
+</html>
