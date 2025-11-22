@@ -1,7 +1,7 @@
 let userScore = 0;
 let computerScore = 0;
 
-const contractAddress = "0x8242E1618D96E5019BB4Eba0C9978bAF3DDBcd39";
+const contractAddress = "0x007f3404F5A533cf64C939287DfcA5a8c4296170";
 const contractABI = [
 	{
 		"anonymous": false,
