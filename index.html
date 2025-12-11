@@ -4,53 +4,208 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rps game</title>
+    <title>Rock Paper Scissors | Blockchain Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.8.0/dist/ethers.umd.min.js"></script>
     <link rel="stylesheet" href="style.css">
-
-
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.8.0/dist/ethers.umd.min.js" type="application/javascript"></script> 
 </head>
 <body>
-    <header>
-        <h1>Rock Paper Scissors</h1>
-    </header>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-fist-raised"></i> Rock Paper Scissors</h1>
+                <p class="subtitle">A decentralized game on BSC Testnet</p>
+            </div>
+            <div class="wallet-section">
+                <div class="wallet-info" id="walletInfo" style="display: none;">
+                    <span class="wallet-address" id="walletAddress"></span>
+                    <span class="balance" id="walletBalance">0 BNB</span>
+                </div>
+                <button class="connect-btn" id="connectBtn">
+                    <i class="fas fa-wallet"></i> Connect Wallet
+                </button>
+            </div>
+        </header>
 
+        <!-- Game Stats -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-gamepad"></i></div>
+                <div class="stat-content">
+                    <h3>Contract Balance</h3>
+                    <p id="contractBalance">0.00 BNB</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                <div class="stat-content">
+                    <h3>Your Wins</h3>
+                    <p id="playerWins">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-history"></i></div>
+                <div class="stat-content">
+                    <h3>Total Games</h3>
+                    <p id="totalGames">0</p>
+                </div>
+            </div>
+        </div>
 
- <div class= "score-board"> <!--// thisis the board that will display scores-->
- <div id= "user-label" class="badge">user</div><!--//here we specifythe id for the user-->
- <div id= "computer-label" class="badge">computer</div><!--// here we write for the computer-->
-        <span id="user-score">0</span>:<span id= "computer-score">0</span><!--// this is where our rock paper scissors counter will go-->
+        <!-- Main Game Area -->
+        <main class="game-area">
+            <!-- Score Board -->
+            <div class="score-board">
+                <div class="player-side">
+                    <div class="player-label">You</div>
+                    <div class="score-display">
+                        <span class="score" id="user-score">0</span>
+                    </div>
+                </div>
+                <div class="vs-badge">VS</div>
+                <div class="player-side computer">
+                    <div class="player-label">Computer</div>
+                    <div class="score-display">
+                        <span class="score" id="computer-score">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="game-controls">
+                <div class="bet-info">
+                    <span class="bet-badge">Bet: 0.0001 BNB</span>
+                    <span class="payout-info">Win: 0.0002 BNB | Draw: Refund</span>
+                </div>
+                
+                <div class="choices">
+                    <div class="choice-card" id="r">
+                        <div class="choice-icon rock">
+                            <i class="fas fa-fist-raised"></i>
+                        </div>
+                        <div class="choice-label">Rock</div>
+                        <div class="choice-desc">Smashes scissors</div>
+                    </div>
+                    
+                    <div class="choice-card" id="p">
+                        <div class="choice-icon paper">
+                            <i class="fas fa-hand-paper"></i>
+                        </div>
+                        <div class="choice-label">Paper</div>
+                        <div class="choice-desc">Covers rock</div>
+                    </div>
+                    
+                    <div class="choice-card" id="s">
+                        <div class="choice-icon scissors">
+                            <i class="fas fa-hand-scissors"></i>
+                        </div>
+                        <div class="choice-label">Scissors</div>
+                        <div class="choice-desc">Cuts paper</div>
+                    </div>
+                </div>
+
+                <!-- Action Message -->
+                <div class="action-section">
+                    <p id="action-msg" class="action-msg">Connect wallet and make your move!</p>
+                    <div id="result" class="result-display"></div>
+                </div>
+            </div>
+
+            <!-- Game History Tabs -->
+            <div class="history-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="showTab('personal')">
+                        <i class="fas fa-user"></i> Your History
+                    </button>
+                    <button class="tab-btn" onclick="showTab('recent')">
+                        <i class="fas fa-globe"></i> Recent Games
+                    </button>
+                    <button class="tab-btn" onclick="showTab('stats')">
+                        <i class="fas fa-chart-bar"></i> Statistics
+                    </button>
+                </div>
+                
+                <div class="tab-content" id="personalTab">
+                    <h3><i class="fas fa-history"></i> Your Game History</h3>
+                    <div id="gameHistory" class="history-list">
+                        <div class="empty-state">
+                            <i class="fas fa-gamepad"></i>
+                            <p>No games played yet. Make your first move!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="recentTab" style="display: none;">
+                    <h3><i class="fas fa-globe"></i> Recent Games</h3>
+                    <div id="recentGames" class="history-list">
+                        <div class="empty-state">
+                            <i class="fas fa-users"></i>
+                            <p>Waiting for game activity...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="statsTab" style="display: none;">
+                    <h3><i class="fas fa-chart-bar"></i> Your Statistics</h3>
+                    <div id="playerStats" class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value" id="statTotal">0</div>
+                            <div class="stat-label">Total Games</div>
+                        </div>
+                        <div class="stat-item win">
+                            <div class="stat-value" id="statWins">0</div>
+                            <div class="stat-label">Wins</div>
+                        </div>
+                        <div class="stat-item draw">
+                            <div class="stat-value" id="statDraws">0</div>
+                            <div class="stat-label">Draws</div>
+                        </div>
+                        <div class="stat-item loss">
+                            <div class="stat-value" id="statLosses">0</div>
+                            <div class="stat-label">Losses</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="statWinRate">0%</div>
+                            <div class="stat-label">Win Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="network-info">
+                <span class="network-badge">
+                    <i class="fas fa-network-wired"></i> BSC Testnet
+                </span>
+                <span class="contract-info">
+                    Contract: <span id="contractAddressShort">Not connected</span>
+                </span>
+            </div>
+            <div class="footer-links">
+                <a href="#" onclick="fundContract()" class="footer-link">
+                    <i class="fas fa-coins"></i> Fund Contract
+                </a>
+                <a href="#" onclick="refreshAll()" class="footer-link">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </a>
+            </div>
+        </footer>
+
+        <!-- Loading Modal -->
+        <div id="loadingModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="spinner"></div>
+                <h3 id="loadingText">Processing Transaction</h3>
+                <p id="loadingSubtext">Waiting for blockchain confirmation...</p>
+                <div class="tx-hash" id="txHash"></div>
+            </div>
+        </div>
     </div>
 
-<!-- 
- <div class= "result">
-        <p></p>
-    </div> -->
-
-
- <div class="choices" id="result"><!--// the class will contain ourIDs -->
-        <div class="choice" id="r">
-            <img src="images/rock.png" alt="Rock">
-        </div>
-
-
-        <div class="choice" id="p">
-            <img src="images/paper.png" alt="Paper">
-        </div>
-
-
-        <div class="choice" id="s">
-            <img src="images/scissors.png" alt="Scissors">
-        </div>
-
-
-    </div>
-    
- <p id= "action-msg">Make your move.</p> <!--//здесь making your choice here -->
-   
-
-    <button id="connectBtn">Connect Wallet</button>
- <script src="app.js" charset="utf-8"></script>
-
+    <script src="app.js"></script>
 </body>
 </html>
